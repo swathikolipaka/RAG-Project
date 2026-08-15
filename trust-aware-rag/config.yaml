@@ -1,0 +1,71 @@
+# =============================================================================
+# trust-aware-rag configuration
+#
+# Every threshold in this file is meant to be tuned experimentally, not
+# trusted as-is. Values marked "(Phase N)" are read by components that are
+# not implemented yet in this repo state - they are here so the schema is
+# stable from the start, per the project spec.
+# =============================================================================
+
+embedding:
+  model: sentence-transformers/all-MiniLM-L6-v2
+  batch_size: 32
+  cache_dir: data/cache/embeddings   # persisted embedding cache (see src/embeddings/embedder.py)
+  normalize: true                     # L2-normalize so FAISS inner product == cosine similarity
+
+chunking:
+  size: 500          # approx tokens per chunk (word-count proxy, see chunker.py docstring)
+  overlap: 75         # approx tokens of overlap between consecutive chunks
+  min_chunk_chars: 20 # drop near-empty trailing chunks
+
+retrieval:
+  top_k: 5
+  index_dir: data/index
+  index_type: flat_ip  # cosine similarity via normalized vectors + inner product
+
+paths:
+  raw_uploads: data/raw
+  sample_dir: data/sample
+
+logging:
+  level: INFO
+  log_dir: experiments/results
+
+# ---------------------------------------------------------------------------
+# (Phase 4) Verification thresholds - not yet consumed by any code in this
+# repo state. Present now so downstream phases don't require a schema change.
+# ---------------------------------------------------------------------------
+verification:
+  similarity_threshold: 0.5     # NOT YET EVALUATED - placeholder default
+  entailment_threshold: 0.5     # NOT YET EVALUATED - placeholder default
+  model: NOT_YET_CONFIGURED     # e.g. a MiniCheck checkpoint, see architecture notes
+
+# ---------------------------------------------------------------------------
+# (Phase 5) Hallucination decision rule - not yet consumed.
+# ---------------------------------------------------------------------------
+hallucination:
+  unsupported_ratio_threshold: 0.3  # NOT YET EVALUATED - placeholder default
+  any_contradiction_is_hallucination: true
+
+# ---------------------------------------------------------------------------
+# (Phase 6) Trust score weights - not yet consumed. Initial values only,
+# copied from the project spec. Do not cite these as validated.
+# ---------------------------------------------------------------------------
+trust:
+  evidence_support_weight: 0.40
+  evidence_coverage_weight: 0.30
+  evidence_relevance_weight: 0.20
+  contradiction_penalty_weight: 0.10
+  levels:
+    very_high_trust: 90
+    high_trust: 75
+    moderate_trust: 50
+    low_trust: 25
+    very_low_trust: 0
+
+# ---------------------------------------------------------------------------
+# (Phase 2) Generation - not yet consumed.
+# ---------------------------------------------------------------------------
+generation:
+  provider: NOT_YET_CONFIGURED  # set via LLM_PROVIDER env var, see .env.example
+  model: NOT_YET_CONFIGURED

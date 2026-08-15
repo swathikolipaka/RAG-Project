@@ -1,0 +1,30 @@
+# Core
+pyyaml>=6.0
+python-dotenv>=1.0
+
+# Document processing (Phase 1)
+pymupdf>=1.24
+
+# Embeddings + retrieval (Phase 1)
+# NOTE: this pulls in torch and transformers as transitive deps. On
+# Codespaces / CI, installing the CPU-only torch wheel is much smaller and
+# faster than the default CUDA wheel - see README.md for the recommended
+# extra-index-url install command.
+sentence-transformers>=3.0
+faiss-cpu>=1.8
+
+# Data
+numpy>=1.26
+pandas>=2.2
+
+# App (Phase 2+, listed now so `pip install -r requirements.txt` only
+# needs to run once across phases)
+streamlit>=1.36
+
+# Evaluation (Phase 8+)
+scikit-learn>=1.4
+matplotlib>=3.8
+plotly>=5.22
+
+# Testing
+pytest>=8.2

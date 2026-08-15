@@ -1,0 +1,11 @@
+Water freezes at 0 degrees Celsius under standard atmospheric pressure. This
+temperature is also known as the freezing point of water and is used as one
+of the two defining points of the Celsius temperature scale, the other being
+the boiling point of water at 100 degrees Celsius. The freezing point can
+shift slightly with changes in pressure or the presence of dissolved
+substances, a phenomenon known as freezing point depression.
+
+Python is a general-purpose programming language. It was created by Guido
+van Rossum and was first released in 1991. Python emphasizes code
+readability and supports multiple programming paradigms, including
+procedural, object-oriented, and functional programming.
